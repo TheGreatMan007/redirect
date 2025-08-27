@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <title>Google Redirect Link Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 20px;
+      font-family: monospace;
+      background: #f4f4f4;
+      padding: 10px;
+      word-wrap: break-word;
+    }
+  </style></head><body>
+  <h1>🔗 Google Redirect Link Generator</h1>
+
+  <label for="redirectUrl">🔸 Vercel Redirect URL:</label>
+  <input type="text" id="redirectUrl" placeholder="https://silverfiesta.vercel.app/redirect?dest=...">
+
+  <label for="gclid">🔹 GCLID (optional):</label>
+  <input type="text" id="gclid" placeholder="exouEw1">
+
+  <button onclick="generate()">Generate Google-Wrapped Link</button>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    function generate() {
+      const baseUrl = document.getElementById('redirectUrl').value.trim();
+      const gclid = document.getElementById('gclid').value.trim();
+
+      if (!baseUrl) {
+        alert('Please enter your redirect URL');
+        return;
+      }
+
+      const urlWithGclid = gclid
+        ? baseUrl.includes('?') ? `${baseUrl}&gclid=${gclid}` : `${baseUrl}?gclid=${gclid}`
+        : baseUrl;
+
+      const encoded = encodeURIComponent(urlWithGclid);
+      const finalLink = `https://www.google.com/url?q=${encoded}`;
+
+      document.getElementById('output').innerHTML = `
+        ✅ Wrapped Link:<br>
+        <a href="${finalLink}" target="_blank">${finalLink}</a>
+      `;
+    }
+  </script></body></html>
